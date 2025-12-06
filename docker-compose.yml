@@ -25,6 +25,7 @@ services:
     labels:
       - traefik.http.routers.api.rule=Host(`api.localhost`)
       - traefik.http.services.api.loadbalancer.server.port=8000
+      - traefik.docker.network=elite-stack_public
 
   worker:
     build: .
@@ -62,8 +63,10 @@ services:
     image: adminer:latest
     networks: [public, backend]
     labels:
+      - traefik.enable=true
       - traefik.http.routers.adminer.rule=Host(`adminer.localhost`)
       - traefik.http.services.adminer.loadbalancer.server.port=8080
+      - traefik.docker.network=elite-stack_public
 
 volumes:
   pgdata:
@@ -72,4 +75,3 @@ networks:
   public:
   backend:
     internal: true
-
